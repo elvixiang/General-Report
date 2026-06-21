@@ -124,8 +124,9 @@
       </div>
 
       <div class="tabs" role="tablist">
-        <button role="tab" id="tab-id" aria-selected="true" onclick="setLang('id')">Bahasa Indonesia</button>
+        <button role="tab" id="tab-id" aria-selected="true" onclick="setLang('id')">Laporan (ID)</button>
         <button role="tab" id="tab-en" aria-selected="false" onclick="setLang('en')">English</button>
+        <button role="tab" id="tab-plan" aria-selected="false" onclick="setLang('plan')">⭢ Langkah Kamu</button>
         <span class="badge" id="badge">Draft</span>
       </div>
       <div class="docket-shell">
@@ -145,7 +146,7 @@
 <script>
 /* ============== CONFIG ============== */
 /* URL Web app Apps Script kamu — buat AI nyusun + simpan ke sheet. Kosongin dulu nggak apa-apa. */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby7xOwFdPxo5BV9QPmCNqYcGocBpmOQZa6mYGV7y7fv5xJKpa2nqEEWPiF2kGHBYk2QRg/exec";
+const SCRIPT_URL = "";
 
 /* ============== DATA ============== */
 const BRANDS = [
@@ -198,6 +199,7 @@ function setLang(l){
   state.lang=l;
   document.getElementById("tab-id").setAttribute("aria-selected",l==="id");
   document.getElementById("tab-en").setAttribute("aria-selected",l==="en");
+  document.getElementById("tab-plan").setAttribute("aria-selected",l==="plan");
   render();
 }
 
@@ -222,11 +224,17 @@ function render(){
   const docket=document.getElementById("docket");
   const badge=document.getElementById("badge");
   if(state.ai){
-    badge.textContent="Disusun AI"; badge.className="badge ai";
-    docket.textContent = state.lang==="en" ? state.ai.english : state.ai.indo;
+    badge.textContent = state.lang==="plan" ? "Buat kamu" : "Disusun AI";
+    badge.className="badge ai";
+    if(state.lang==="plan"){ docket.textContent = state.ai.plan || "Rencana belum tersedia — susun ulang laporannya."; }
+    else { docket.textContent = state.lang==="en" ? state.ai.english : state.ai.indo; }
     return;
   }
   badge.textContent="Draft"; badge.className="badge";
+  if(state.lang==="plan"){
+    docket.innerHTML=`<span class="empty">Tab ini isinya rencana kerja kamu — apa yang harus kamu lakuin minggu depan, dipilihin yang penting. Muncul setelah kamu klik “Susun laporan dengan AI”.</span>`;
+    return;
+  }
   const lines = draftText(state.lang);
   if(!lines){
     docket.innerHTML=`<span class="empty">Isi update minimal satu brand di kiri, lalu klik “Susun laporan dengan AI”. Versi draft mentah muncul di sini, versi rapinya setelah disusun.</span>`;
@@ -242,7 +250,11 @@ function render(){
   }).join("\n");
 }
 function escapeHtml(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
-function currentText(){ return state.ai ? (state.lang==="en"?state.ai.english:state.ai.indo) : document.getElementById("docket").innerText; }
+function currentText(){
+  if(!state.ai) return document.getElementById("docket").innerText;
+  if(state.lang==="plan") return state.ai.plan || "";
+  return state.lang==="en" ? state.ai.english : state.ai.indo;
+}
 
 /* ============== AI SUSUN ============== */
 async function aiCompile(btn){
@@ -255,7 +267,7 @@ async function aiCompile(btn){
     const res=await fetch(SCRIPT_URL.trim(),{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"compile",week:state.week,brands:brands})});
     const data=await res.json();
     if(data && data.ok && data.indo){
-      state.ai={indo:data.indo,english:data.english||data.indo};
+      state.ai={indo:data.indo,english:data.english||data.indo,plan:data.plan||""};
       sub.className="ai-sub"; sub.textContent="Selesai ✓ — cek di kanan, edit kalau perlu, terus copy.";
       render();
     } else { sub.className="ai-sub errc"; sub.textContent=(data&&data.error)?("AI: "+data.error):"Belum dapet hasil. Cek setting Apps Script."; }
