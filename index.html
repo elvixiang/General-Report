@@ -3,99 +3,41 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Laporan Mingguan GM — Belly Yummy</title>
+<title>Laporan Mingguan GM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#2A2018;
-    --wine:#7A1F2B;
-    --wine-soft:#9B3B47;
-    --paper:#F4EEE2;
-    --card:#FFFFFF;
-    --line:#E3D9C8;
-    --line-soft:#EFE8DA;
-    --muted:#8A7E6E;
-    --green:#2E7D52;
-    --amber:#C9821B;
-    --red:#B23A48;
-    --b-noodle:#C0392B;
-    --b-soya:#B5852E;
-    --b-monty:#2F7A6F;
-    --b-yonai:#B5638A;
-    --docket:#FCFAF4;
+    --ink:#2A2018;--wine:#7A1F2B;--wine-soft:#9B3B47;--paper:#F4EEE2;--card:#FFFFFF;
+    --line:#E3D9C8;--line-soft:#EFE8DA;--muted:#8A7E6E;--green:#2E7D52;--amber:#C9821B;--red:#B23A48;
+    --b-noodle:#C0392B;--b-soya:#B5852E;--b-monty:#2F7A6F;--b-yonai:#B5638A;--docket:#FCFAF4;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  body{
-    font-family:'Inter',system-ui,sans-serif;
-    background:var(--paper);
-    color:var(--ink);
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased;}
   .wrap{max-width:1180px;margin:0 auto;padding:28px 22px 80px;}
-
-  /* Header */
-  header.top{
-    display:flex;align-items:flex-end;justify-content:space-between;
-    gap:20px;flex-wrap:wrap;
-    border-bottom:2px solid var(--ink);
-    padding-bottom:18px;margin-bottom:26px;
-  }
+  header.top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:18px;margin-bottom:26px;}
   .brand-line{display:flex;align-items:center;gap:12px;}
-  .stamp{
-    width:42px;height:42px;border-radius:9px;flex:none;
-    background:var(--wine);color:#fff;
-    display:grid;place-items:center;
-    font-family:'Bricolage Grotesque';font-weight:800;font-size:20px;
-    box-shadow:0 2px 0 rgba(122,31,43,.35);
-  }
-  h1{
-    font-family:'Bricolage Grotesque';font-weight:800;
-    font-size:clamp(22px,3.2vw,30px);line-height:1.05;margin:0;letter-spacing:-.01em;
-  }
-  .sub{font-size:12.5px;color:var(--muted);margin-top:2px;}
+  .stamp{width:42px;height:42px;border-radius:9px;flex:none;background:var(--wine);color:#fff;display:grid;place-items:center;font-family:'Bricolage Grotesque';font-weight:800;font-size:20px;box-shadow:0 2px 0 rgba(122,31,43,.35);}
+  h1{font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(22px,3.2vw,30px);line-height:1.05;margin:0;letter-spacing:-.01em;}
+  .sub{font-size:12.5px;color:var(--muted);margin-top:2px;max-width:360px;}
   .week-field{text-align:right;}
   .week-field label{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin-bottom:5px;}
-  .week-field input{
-    font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;
-    border:1px solid var(--line);background:var(--card);color:var(--ink);
-    border-radius:8px;padding:8px 11px;text-align:right;width:170px;
-  }
-
-  /* Grid */
+  .week-field input{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 11px;text-align:right;width:170px;}
   .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start;}
   @media(max-width:920px){.grid{grid-template-columns:1fr;gap:20px;}}
-
-  /* Form */
-  .eyebrow{
-    font-size:11px;text-transform:uppercase;letter-spacing:.16em;
-    color:var(--wine);font-weight:600;margin:0 0 12px;
-    display:flex;align-items:center;gap:9px;
-  }
+  .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--wine);font-weight:600;margin:0 0 6px;display:flex;align-items:center;gap:9px;}
   .eyebrow::after{content:"";flex:1;height:1px;background:var(--line);}
-
-  .card{
-    background:var(--card);border:1px solid var(--line);
-    border-radius:14px;padding:16px 16px 17px;margin-bottom:14px;
-    transition:border-color .15s ease;
-  }
+  .eyebrow-note{font-size:12px;color:var(--muted);margin:0 0 14px;font-style:italic;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 17px;margin-bottom:14px;transition:border-color .15s ease;}
   .card:focus-within{border-color:var(--wine-soft);}
-  .card-head{display:flex;align-items:center;gap:10px;margin-bottom:11px;}
+  .card-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
   .dot{width:11px;height:11px;border-radius:50%;flex:none;}
   .bname{font-family:'Bricolage Grotesque';font-weight:700;font-size:16px;letter-spacing:-.01em;}
   .bname small{display:block;font-family:'Inter';font-weight:400;font-size:11px;color:var(--muted);letter-spacing:0;}
-
-  /* status segmented */
   .seg{display:flex;gap:6px;margin-left:auto;}
-  .seg button{
-    font-family:'Inter';font-size:12px;font-weight:500;cursor:pointer;
-    border:1px solid var(--line);background:var(--paper);color:var(--muted);
-    border-radius:20px;padding:5px 11px;display:flex;align-items:center;gap:6px;
-    transition:all .13s ease;
-  }
+  .seg button{font-family:'Inter';font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:20px;padding:5px 11px;display:flex;align-items:center;gap:6px;transition:all .13s ease;}
   .seg button .sdot{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.5;}
   .seg button[data-on="1"]{color:#fff;border-color:transparent;font-weight:600;}
   .seg button[data-on="1"] .sdot{opacity:1;background:#fff;}
@@ -103,98 +45,52 @@
   .seg button.warn[data-on="1"]{background:var(--amber);}
   .seg button.stop[data-on="1"]{background:var(--red);}
   .seg button:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
-
-  label.fld{display:block;font-size:11px;color:var(--muted);font-weight:500;margin:11px 0 5px;}
-  textarea,input.txt{
-    width:100%;font-family:'Inter';font-size:13.5px;color:var(--ink);
-    border:1px solid var(--line);background:#FEFDFB;border-radius:9px;
-    padding:9px 11px;resize:vertical;transition:border-color .13s ease;
-  }
-  textarea{min-height:46px;line-height:1.45;}
-  textarea:focus,input.txt:focus{outline:none;border-color:var(--wine-soft);background:#fff;}
+  textarea{width:100%;font-family:'Inter';font-size:13.5px;color:var(--ink);border:1px solid var(--line);background:#FEFDFB;border-radius:9px;padding:10px 11px;min-height:70px;line-height:1.45;resize:vertical;transition:border-color .13s ease;}
+  textarea:focus{outline:none;border-color:var(--wine-soft);background:#fff;}
   textarea::placeholder{color:#BCB2A2;}
-  .hint{font-size:11px;color:#A89C8B;margin-top:5px;font-style:italic;}
-  .multi-hint{font-size:11px;color:var(--muted);margin:0 0 7px;}
 
-  /* Docket (signature) */
+  .compose{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px;margin-bottom:14px;}
+  .ai-main{width:100%;font-family:'Inter';font-size:14px;font-weight:700;cursor:pointer;border:none;border-radius:10px;padding:14px;background:var(--wine);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:all .13s ease;}
+  .ai-main:hover{background:var(--wine-soft);}
+  .ai-main:active{transform:translateY(1px);}
+  .ai-main:disabled{background:#C9BEAF;cursor:not-allowed;}
+  .ai-sub{font-size:11.5px;color:var(--muted);text-align:center;margin-top:9px;min-height:15px;}
+  .ai-sub.warnc{color:var(--amber);}
+  .ai-sub.errc{color:var(--red);}
+
   .docket-col{position:sticky;top:20px;}
   @media(max-width:920px){.docket-col{position:static;}}
-  .tabs{display:flex;gap:7px;margin-bottom:12px;}
-  .tabs button{
-    font-family:'Inter';font-size:12.5px;font-weight:600;cursor:pointer;
-    border:1px solid var(--line);background:var(--card);color:var(--muted);
-    border-radius:8px;padding:8px 16px;transition:all .13s ease;letter-spacing:.02em;
-  }
+  .tabs{display:flex;gap:7px;margin-bottom:12px;align-items:center;}
+  .tabs button{font-family:'Inter';font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:8px;padding:8px 16px;transition:all .13s ease;letter-spacing:.02em;}
   .tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink);}
   .tabs button:focus-visible{outline:2px solid var(--wine);outline-offset:2px;}
-
+  .badge{margin-left:auto;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:4px 9px;border-radius:6px;background:var(--paper);border:1px solid var(--line);}
+  .badge.ai{color:var(--wine);border-color:var(--wine-soft);background:#FBF4F2;}
   .docket-shell{filter:drop-shadow(0 10px 24px rgba(42,32,24,.13));}
-  .perf{height:11px;background:
-      radial-gradient(circle at 6px 11px, transparent 6px, var(--docket) 6.5px) repeat-x;
-    background-size:12px 11px;background-position:0 0;}
+  .perf{height:11px;background:radial-gradient(circle at 6px 11px, transparent 6px, var(--docket) 6.5px) repeat-x;background-size:12px 11px;background-position:0 0;}
   .perf.bottom{transform:scaleY(-1);}
-  .docket{
-    background:var(--docket);
-    font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.62;
-    color:#3A2F24;padding:6px 22px 10px;white-space:pre-wrap;word-break:break-word;
-    min-height:120px;
-  }
+  .docket{background:var(--docket);font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.62;color:#3A2F24;padding:6px 22px 10px;white-space:pre-wrap;word-break:break-word;min-height:150px;}
   .docket .d-title{font-weight:700;font-size:13.5px;color:var(--ink);letter-spacing:.02em;}
   .docket .d-meta{color:var(--muted);}
   .docket .rule{color:#CDBFA8;}
   .docket .sect{font-weight:700;color:var(--wine);letter-spacing:.04em;}
   .docket .sect.alert{color:var(--red);}
-  .docket .empty{color:#BBAF9C;font-style:italic;font-family:'Inter';font-size:12px;}
-
-  /* actions */
+  .docket .empty{color:#BBAF9C;font-style:italic;font-family:'Inter';font-size:12.5px;line-height:1.6;}
   .actions{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
-  .btn{
-    font-family:'Inter';font-size:13px;font-weight:600;cursor:pointer;
-    border-radius:9px;padding:11px 15px;border:1px solid transparent;
-    display:inline-flex;align-items:center;gap:8px;transition:all .13s ease;flex:1;justify-content:center;
-  }
+  .btn{font-family:'Inter';font-size:13px;font-weight:600;cursor:pointer;border-radius:9px;padding:11px 15px;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px;transition:all .13s ease;flex:1;justify-content:center;}
   .btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
   .btn.copy{background:var(--ink);color:var(--paper);}
   .btn.copy:hover{background:#3d3025;}
-  .btn.send{background:var(--wine);color:#fff;}
-  .btn.send:hover{background:var(--wine-soft);}
-  .btn.send:disabled{background:#C9BEAF;cursor:not-allowed;color:#fff;}
+  .btn.send{background:#fff;color:var(--wine);border:1px solid var(--wine-soft);}
+  .btn.send:hover{background:#FBF4F2;}
   .btn:active{transform:translateY(1px);}
   .btn .ok-check{display:none;}
-  .btn.done{background:var(--green) !important;}
+  .btn.done{background:var(--green) !important;color:#fff !important;border-color:transparent !important;}
   .btn.done .lbl{display:none;}
   .btn.done .ok-check{display:inline;}
-
   .sync-note{font-size:11.5px;color:var(--muted);margin-top:9px;min-height:16px;text-align:center;}
   .sync-note.err{color:var(--red);}
   .sync-note.good{color:var(--green);}
-
-  /* setup */
-  details.setup{margin-top:18px;border:1px solid var(--line);border-radius:11px;background:var(--card);overflow:hidden;}
-  details.setup summary{
-    cursor:pointer;padding:13px 16px;font-size:12.5px;font-weight:600;color:var(--ink);
-    list-style:none;display:flex;align-items:center;gap:9px;
-  }
-  details.setup summary::-webkit-details-marker{display:none;}
-  details.setup summary .chev{transition:transform .2s ease;color:var(--muted);font-size:14px;}
-  details.setup[open] summary .chev{transform:rotate(90deg);}
-  .setup-body{padding:0 16px 16px;font-size:12.5px;color:#5a5044;line-height:1.6;}
-  .setup-body ol{margin:4px 0 12px;padding-left:18px;}
-  .setup-body li{margin-bottom:5px;}
-  .setup-body code{background:var(--paper);padding:1px 5px;border-radius:4px;font-family:'JetBrains Mono';font-size:11.5px;}
-  .url-row{display:flex;gap:8px;margin:6px 0 14px;}
-  .url-row input{flex:1;font-family:'JetBrains Mono';font-size:11px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--ink);}
-  .gs{
-    background:#221b16;color:#e8dfd2;font-family:'JetBrains Mono';font-size:11px;line-height:1.55;
-    border-radius:9px;padding:13px 14px;overflow-x:auto;white-space:pre;position:relative;
-  }
-  .gs-copy{
-    position:absolute;top:9px;right:9px;font-family:'Inter';font-size:10.5px;font-weight:600;
-    background:rgba(255,255,255,.12);color:#fff;border:none;border-radius:6px;padding:5px 9px;cursor:pointer;
-  }
-  .gs-copy:hover{background:rgba(255,255,255,.22);}
-
-  .footnote{margin-top:24px;font-size:11px;color:#A89C8B;text-align:center;}
   @media(prefers-reduced-motion:reduce){*{transition:none !important;}}
 </style>
 </head>
@@ -205,274 +101,195 @@
       <div class="stamp">BY</div>
       <div>
         <h1>Laporan Mingguan GM</h1>
-        <div class="sub">Isi sekali · ter-compile rapi · copy ke WA · sync ke Spreadsheet</div>
+        <div class="sub">Buang isi kepala per brand → AI susun jadi laporan rapi → copy ke WA</div>
       </div>
     </div>
     <div class="week-field">
       <label for="week">Periode minggu</label>
-      <input id="week" class="txt" type="text" />
+      <input id="week" class="line" type="text" style="font-family:'JetBrains Mono';font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 11px;text-align:right;width:170px;" />
     </div>
   </header>
 
   <div class="grid">
-    <!-- LEFT: FORM -->
     <section>
-      <p class="eyebrow">Status &amp; progress per brand</p>
+      <p class="eyebrow">Update per brand</p>
+      <p class="eyebrow-note">Tulis bebas — sependek atau seberantakan apa pun. Nggak usah dirapihin, itu tugas AI nanti.</p>
       <div id="brand-cards"></div>
-
-      <p class="eyebrow" style="margin-top:22px;">Level GM — lintas brand</p>
-
-      <div class="card">
-        <div class="card-head"><span class="dot" style="background:var(--wine)"></span><span class="bname">Butuh keputusan boss</span></div>
-        <p class="multi-hint">Bagian paling penting buat boss. Satu poin per baris. Kalau kosong, boss anggap semua aman.</p>
-        <textarea id="decisions" placeholder="cth: Approval budget tambahan fit-out Soya Suka MOI (2 line item Tomi &amp; Studio)&#10;cth: Go/no-go timeline launch Yo-Nai bulan depan"></textarea>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><span class="dot" style="background:var(--ink)"></span><span class="bname">Angka penting</span></div>
-        <p class="multi-hint">Sales, progress %, timeline — apa pun yang lagi dipantau. Satu per baris.</p>
-        <textarea id="numbers" placeholder="cth: Sales No.25 +12% WoW&#10;cth: Fit-out Soya Suka 65% selesai"></textarea>
-      </div>
-
-      <div class="card">
-        <div class="card-head"><span class="dot" style="background:var(--ink)"></span><span class="bname">Fokus minggu depan</span></div>
-        <p class="multi-hint">2–3 poin arah minggu depan. Satu per baris.</p>
-        <textarea id="focus" placeholder="cth: Finalisasi kontraktor Soya Suka&#10;cth: Submit dokumen BPOM Yo-Nai"></textarea>
-      </div>
     </section>
 
-    <!-- RIGHT: DOCKET -->
     <section class="docket-col">
+      <div class="compose">
+        <button class="ai-main" id="composeBtn" onclick="aiCompile(this)">✨ Susun laporan dengan AI</button>
+        <div class="ai-sub" id="aiSub">AI baca update kamu → simpulin keputusan boss, angka, & fokus → rapihin per brand</div>
+      </div>
+
       <div class="tabs" role="tablist">
         <button role="tab" id="tab-id" aria-selected="true" onclick="setLang('id')">Bahasa Indonesia</button>
         <button role="tab" id="tab-en" aria-selected="false" onclick="setLang('en')">English</button>
+        <span class="badge" id="badge">Draft</span>
       </div>
-
       <div class="docket-shell">
         <div class="perf"></div>
         <div class="docket" id="docket"></div>
         <div class="perf bottom"></div>
       </div>
-
       <div class="actions">
         <button class="btn copy" onclick="copyDocket(this)"><span class="lbl">Copy buat WhatsApp</span><span class="ok-check">✓ Tersalin</span></button>
         <button class="btn send" id="sendBtn" onclick="sendToSheet(this)"><span class="lbl">Simpan ke Spreadsheet</span><span class="ok-check">✓ Tersimpan</span></button>
       </div>
       <div class="sync-note" id="syncNote"></div>
-
     </section>
   </div>
 </div>
 
 <script>
 /* ============== CONFIG ============== */
-/* Ganti dengan Web app URL Apps Script kamu untuk koneksi permanen di Vercel */
+/* URL Web app Apps Script kamu — buat AI nyusun + simpan ke sheet. Kosongin dulu nggak apa-apa. */
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby7xOwFdPxo5BV9QPmCNqYcGocBpmOQZa6mYGV7y7fv5xJKpa2nqEEWPiF2kGHBYk2QRg/exec";
 
 /* ============== DATA ============== */
 const BRANDS = [
-  { id:"noodle", name:"No. 25 Minced Meat Noodle", tag:"Mie",       color:"var(--b-noodle)",
-    eg:"cth: Sales +12% WoW, menu spicy edition launching minggu depan" },
-  { id:"soya",   name:"SOYA SUKA", tag:"Soya / outlet",              color:"var(--b-soya)",
-    eg:"cth: Fit-out MOI — bid Tomi & Studio fix, tinggal konfirmasi 2 line item" },
-  { id:"monty",  name:"MONTY&Co.", tag:"Tea / IP Monty",            color:"var(--b-monty)",
-    eg:"cth: Trademark Monty — merek kombinasi diajukan ke DJKI" },
-  { id:"yonai",  name:"Yo-Nai", tag:"Yoghurt naipizi",              color:"var(--b-yonai)",
-    eg:"cth: BPOM MD jalan, sourcing packaging booth di-finalisasi" },
+  { id:"noodle", name:"No. 25 Minced Meat Noodle", tag:"Mie",        color:"var(--b-noodle)", eg:"contoh: sales naik tipis, kontraktor outlet baru molor seminggu, lagi mikir mau tambah menu" },
+  { id:"soya",   name:"SOYA SUKA",                 tag:"Outlet",      color:"var(--b-soya)",   eg:"contoh: fit-out MOI hampir kelar tapi bid Tomi & Studio belum fix, butuh approval budget" },
+  { id:"monty",  name:"MONTY&Co.",                 tag:"Tea / Monty", color:"var(--b-monty)",  eg:"contoh: urusan trademark Monty jalan, lagi nungguin DJKI" },
+  { id:"yonai",  name:"Yo-Nai",                    tag:"Yoghurt",     color:"var(--b-yonai)",  eg:"contoh: BPOM masih proses, packaging booth belum kelar, ragu timeline launch bulan depan" },
 ];
-
 const STATUSES = [
   { key:"ok",   cls:"ok",   id:"On track",     en:"On track", emoji:"🟢" },
   { key:"warn", cls:"warn", id:"Ada hambatan", en:"Blocker",  emoji:"🟡" },
   { key:"stop", cls:"stop", id:"Stuck",        en:"Stuck",    emoji:"🔴" },
 ];
-
-const state = {
-  week:"", lang:"id",
-  brands:{}, // id -> {status, progress, blocker}
-};
-BRANDS.forEach(b => state.brands[b.id] = { status:"ok", progress:"", blocker:"" });
+const state = { week:"", lang:"id", brands:{}, ai:null };  // ai = {indo, english} setelah disusun
+BRANDS.forEach(b => state.brands[b.id] = { status:"ok", note:"" });
 
 /* ============== INIT ============== */
 function currentWeekLabel(){
-  const now = new Date();
-  const day = (now.getDay()+6)%7;            // Mon=0
-  const mon = new Date(now); mon.setDate(now.getDate()-day);
-  const fri = new Date(mon); fri.setDate(mon.getDate()+4);
-  const M = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
-  const sameMonth = mon.getMonth()===fri.getMonth();
-  return sameMonth
-    ? `${mon.getDate()}–${fri.getDate()} ${M[fri.getMonth()]} ${fri.getFullYear()}`
-    : `${mon.getDate()} ${M[mon.getMonth()]} – ${fri.getDate()} ${M[fri.getMonth()]} ${fri.getFullYear()}`;
+  const now=new Date(); const day=(now.getDay()+6)%7;
+  const mon=new Date(now); mon.setDate(now.getDate()-day);
+  const fri=new Date(mon); fri.setDate(mon.getDate()+4);
+  const M=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+  const sm=mon.getMonth()===fri.getMonth();
+  return sm ? `${mon.getDate()}–${fri.getDate()} ${M[fri.getMonth()]} ${fri.getFullYear()}`
+            : `${mon.getDate()} ${M[mon.getMonth()]} – ${fri.getDate()} ${M[fri.getMonth()]} ${fri.getFullYear()}`;
 }
-
 function buildBrandCards(){
-  const root = document.getElementById("brand-cards");
-  root.innerHTML = BRANDS.map(b => `
+  const root=document.getElementById("brand-cards");
+  root.innerHTML=BRANDS.map(b=>`
     <div class="card" data-brand="${b.id}">
       <div class="card-head">
         <span class="dot" style="background:${b.color}"></span>
         <span class="bname">${b.name}<small>${b.tag}</small></span>
         <div class="seg" role="group" aria-label="Status ${b.name}">
-          ${STATUSES.map(s => `<button type="button" class="${s.cls}" data-st="${s.key}" data-on="${s.key==='ok'?1:0}" onclick="setStatus('${b.id}','${s.key}')"><span class="sdot"></span>${s.id}</button>`).join("")}
+          ${STATUSES.map(s=>`<button type="button" class="${s.cls}" data-st="${s.key}" data-on="${s.key==='ok'?1:0}" onclick="setStatus('${b.id}','${s.key}')"><span class="sdot"></span>${s.id}</button>`).join("")}
         </div>
       </div>
-      <label class="fld">Progress minggu ini — hasil, bukan aktivitas</label>
-      <textarea data-f="progress" data-b="${b.id}" placeholder="${b.eg}"></textarea>
-      <label class="fld">Hambatan / catatan <span style="opacity:.6">(opsional)</span></label>
-      <textarea data-f="blocker" data-b="${b.id}" placeholder="Kosongin kalau nggak ada"></textarea>
+      <textarea data-b="${b.id}" placeholder="${b.eg}"></textarea>
     </div>`).join("");
-
-  root.querySelectorAll("textarea[data-b]").forEach(t => {
-    t.addEventListener("input", e => {
-      state.brands[e.target.dataset.b][e.target.dataset.f] = e.target.value;
-      render();
-    });
+  root.querySelectorAll("textarea[data-b]").forEach(t=>{
+    t.addEventListener("input",e=>{ state.brands[e.target.dataset.b].note=e.target.value; state.ai=null; render(); });
   });
 }
-
-function setStatus(bid, key){
-  state.brands[bid].status = key;
-  document.querySelectorAll(`.card[data-brand="${bid}"] .seg button`).forEach(btn=>{
-    btn.dataset.on = btn.dataset.st===key ? 1 : 0;
-  });
+function setStatus(bid,key){
+  state.brands[bid].status=key; state.ai=null;
+  document.querySelectorAll(`.card[data-brand="${bid}"] .seg button`).forEach(b=>b.dataset.on=b.dataset.st===key?1:0);
   render();
 }
-
 function setLang(l){
-  state.lang = l;
-  document.getElementById("tab-id").setAttribute("aria-selected", l==="id");
-  document.getElementById("tab-en").setAttribute("aria-selected", l==="en");
+  state.lang=l;
+  document.getElementById("tab-id").setAttribute("aria-selected",l==="id");
+  document.getElementById("tab-en").setAttribute("aria-selected",l==="en");
   render();
 }
 
-/* ============== COMPILE ============== */
-function bullets(val){
-  return (val||"").split("\n").map(s=>s.trim()).filter(Boolean);
-}
-
-function compile(lang){
-  const L = lang==="en" ? {
-    title:"WEEKLY REPORT — GM", week:"Week", prog:"Progress", block:"Note",
-    decisions:"DECISIONS NEEDED", numbers:"KEY NUMBERS", focus:"NEXT WEEK FOCUS"
-  } : {
-    title:"LAPORAN MINGGUAN — GM", week:"Periode", prog:"Progress", block:"Catatan",
-    decisions:"BUTUH KEPUTUSAN BOSS", numbers:"ANGKA PENTING", focus:"FOKUS MINGGU DEPAN"
-  };
-  const RULE = "––––––––––––––––––––––";
-  const out = [];
-  out.push(`§T${L.title}`);
-  out.push(`§M${L.week}: ${state.week||"—"}`);
-  out.push(`§R${RULE}`);
-
+/* ============== DRAFT COMPILE (sebelum AI) ============== */
+function draftText(lang){
+  const L = lang==="en" ? {title:"WEEKLY REPORT — GM (draft)",week:"Week"} : {title:"LAPORAN MINGGUAN — GM (draft)",week:"Periode"};
+  const RULE="––––––––––––––––––––––"; const out=[];
+  out.push(`§T${L.title}`); out.push(`§M${L.week}: ${state.week||"—"}`); out.push(`§R${RULE}`);
+  let any=false;
   BRANDS.forEach(b=>{
-    const s = state.brands[b.id];
-    const st = STATUSES.find(x=>x.key===s.status);
-    const stWord = lang==="en"?st.en:st.id;
-    out.push(`§H${st.emoji} ${b.name} — ${stWord}`);
-    if(s.progress.trim()) out.push(`   ${L.prog}: ${s.progress.trim()}`);
-    if(s.blocker.trim())  out.push(`   ${L.block}: ${s.blocker.trim()}`);
+    const s=state.brands[b.id]; const st=STATUSES.find(x=>x.key===s.status);
+    out.push(`§H${st.emoji} ${b.name} — ${lang==="en"?st.en:st.id}`);
+    if(s.note.trim()){ any=true; out.push(`   ${s.note.trim()}`); }
   });
-
-  const dec = bullets(state.decisions);
-  out.push(`§R${RULE}`);
-  out.push(`§A⚠️ ${L.decisions}`);
-  if(dec.length) dec.forEach(d=>out.push(`• ${d}`));
-  else out.push(`§E${lang==="en"?"(none flagged this week)":"(tidak ada minggu ini)"}`);
-
-  const nums = bullets(state.numbers);
-  if(nums.length){
-    out.push(`§R${RULE}`);
-    out.push(`§S${L.numbers}`);
-    nums.forEach(n=>out.push(`• ${n}`));
-  }
-  const foc = bullets(state.focus);
-  if(foc.length){
-    out.push(`§R${RULE}`);
-    out.push(`§S${L.focus}`);
-    foc.forEach(f=>out.push(`• ${f}`));
-  }
+  if(!any) return null;
   return out;
 }
-
-/* plain text for clipboard / sheet */
-function plainText(lang){
-  return compile(lang).map(l=>l.replace(/^§[TMRHASE]/,"")).join("\n");
-}
+function hasInput(){ return BRANDS.some(b=>state.brands[b.id].note.trim()); }
 
 /* ============== RENDER ============== */
 function render(){
-  const lines = compile(state.lang);
-  const html = lines.map(l=>{
-    const tag = l.slice(0,2);
-    const txt = escapeHtml(l.slice(2));
-    if(tag==="§T") return `<span class="d-title">${txt}</span>`;
-    if(tag==="§M") return `<span class="d-meta">${txt}</span>`;
-    if(tag==="§R") return `<span class="rule">${txt}</span>`;
-    if(tag==="§H") return `<span>${txt}</span>`;
-    if(tag==="§A") return `<span class="sect alert">${txt}</span>`;
-    if(tag==="§S") return `<span class="sect">${txt}</span>`;
-    if(tag==="§E") return `<span class="empty">${escapeHtml(l.slice(2))}</span>`;
-    return `<span>${escapeHtml(l)}</span>`;
-  }).join("\n");
-  document.getElementById("docket").innerHTML = html;
-}
-
-function escapeHtml(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
-
-/* ============== ACTIONS ============== */
-function flash(btn){ btn.classList.add("done"); setTimeout(()=>btn.classList.remove("done"),1600); }
-
-async function copyDocket(btn){
-  const text = plainText(state.lang);
-  try{ await navigator.clipboard.writeText(text); }
-  catch{ const t=document.createElement("textarea");t.value=text;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove(); }
-  flash(btn);
-}
-
-function getUrl(){
-  return SCRIPT_URL.trim();
-}
-
-async function sendToSheet(btn){
-  const url = getUrl();
-  const note = document.getElementById("syncNote");
-  note.className="sync-note";
-  if(!url){
-    note.className="sync-note err";
-    note.textContent="SCRIPT_URL belum di-isi di file index.html.";
+  const docket=document.getElementById("docket");
+  const badge=document.getElementById("badge");
+  if(state.ai){
+    badge.textContent="Disusun AI"; badge.className="badge ai";
+    docket.textContent = state.lang==="en" ? state.ai.english : state.ai.indo;
     return;
   }
-  btn.disabled=true; note.textContent="Menyimpan…";
-  const payload = { week: state.week, indo: plainText("id"), english: plainText("en") };
+  badge.textContent="Draft"; badge.className="badge";
+  const lines = draftText(state.lang);
+  if(!lines){
+    docket.innerHTML=`<span class="empty">Isi update minimal satu brand di kiri, lalu klik “Susun laporan dengan AI”. Versi draft mentah muncul di sini, versi rapinya setelah disusun.</span>`;
+    return;
+  }
+  docket.innerHTML=lines.map(l=>{
+    const tag=l.slice(0,2), txt=escapeHtml(l.slice(2));
+    if(tag==="§T")return `<span class="d-title">${txt}</span>`;
+    if(tag==="§M")return `<span class="d-meta">${txt}</span>`;
+    if(tag==="§R")return `<span class="rule">${txt}</span>`;
+    if(tag==="§H")return `<span>${txt}</span>`;
+    return `<span>${escapeHtml(l)}</span>`;
+  }).join("\n");
+}
+function escapeHtml(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+function currentText(){ return state.ai ? (state.lang==="en"?state.ai.english:state.ai.indo) : document.getElementById("docket").innerText; }
+
+/* ============== AI SUSUN ============== */
+async function aiCompile(btn){
+  const sub=document.getElementById("aiSub");
+  if(!hasInput()){ sub.className="ai-sub warnc"; sub.textContent="Isi update minimal satu brand dulu ya."; return; }
+  if(!SCRIPT_URL.trim()){ sub.className="ai-sub warnc"; sub.textContent="AI belum aktif — ikutin panduan setup sekali dulu (lihat chat)."; return; }
+  btn.disabled=true; sub.className="ai-sub"; sub.textContent="AI lagi nyusun laporan…";
+  const brands=BRANDS.map(b=>({ name:b.name, status:STATUSES.find(x=>x.key===state.brands[b.id].status).id, note:state.brands[b.id].note.trim() }));
   try{
-    await fetch(url, {
-      method:"POST", mode:"no-cors",
-      headers:{"Content-Type":"text/plain;charset=utf-8"},
-      body: JSON.stringify(payload)
-    });
-    note.className="sync-note good";
-    note.textContent="Tersimpan ke Spreadsheet ✓";
-    flash(btn);
-  }catch(err){
-    note.className="sync-note err";
-    note.textContent="Gagal kirim. Cek URL & akses 'Anyone' di Apps Script.";
-  }finally{ btn.disabled=false; }
+    const res=await fetch(SCRIPT_URL.trim(),{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"compile",week:state.week,brands:brands})});
+    const data=await res.json();
+    if(data && data.ok && data.indo){
+      state.ai={indo:data.indo,english:data.english||data.indo};
+      sub.className="ai-sub"; sub.textContent="Selesai ✓ — cek di kanan, edit kalau perlu, terus copy.";
+      render();
+    } else { sub.className="ai-sub errc"; sub.textContent=(data&&data.error)?("AI: "+data.error):"Belum dapet hasil. Cek setting Apps Script."; }
+  }catch(e){ sub.className="ai-sub errc"; sub.textContent="Gagal nyambung. Cek URL Apps Script & koneksi."; }
+  finally{ btn.disabled=false; }
+}
+
+/* ============== ACTIONS ============== */
+function flash(b){ b.classList.add("done"); setTimeout(()=>b.classList.remove("done"),1600); }
+async function copyDocket(btn){
+  const t=currentText();
+  try{ await navigator.clipboard.writeText(t); }
+  catch{ const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove(); }
+  flash(btn);
+}
+async function sendToSheet(btn){
+  const url=SCRIPT_URL.trim(); const note=document.getElementById("syncNote"); note.className="sync-note";
+  if(!url){ note.className="sync-note err"; note.textContent="SCRIPT_URL belum diisi di file index.html."; return; }
+  const indo = state.ai ? state.ai.indo : (draftText("id")||[]).map(l=>l.replace(/^§[TMRH]/,"")).join("\n");
+  const english = state.ai ? state.ai.english : (draftText("en")||[]).map(l=>l.replace(/^§[TMRH]/,"")).join("\n");
+  btn.disabled=true; note.textContent="Menyimpan…";
+  try{
+    await fetch(url,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"save",week:state.week,indo:indo,english:english})});
+    note.className="sync-note good"; note.textContent="Tersimpan ke Spreadsheet ✓"; flash(btn);
+  }catch(e){ note.className="sync-note err"; note.textContent="Gagal kirim. Cek URL & akses 'Anyone' di Apps Script."; }
+  finally{ btn.disabled=false; }
 }
 
 /* ============== BOOT ============== */
 function boot(){
-  state.week = currentWeekLabel();
-  const wk = document.getElementById("week");
-  wk.value = state.week;
-  wk.addEventListener("input", e=>{ state.week=e.target.value; render(); });
-
-  ["decisions","numbers","focus"].forEach(id=>{
-    document.getElementById(id).addEventListener("input", e=>{ state[id]=e.target.value; render(); });
-  });
-
-  buildBrandCards();
-  render();
+  state.week=currentWeekLabel();
+  const wk=document.getElementById("week"); wk.value=state.week;
+  wk.addEventListener("input",e=>{ state.week=e.target.value; state.ai=null; render(); });
+  buildBrandCards(); render();
 }
 boot();
 </script>
