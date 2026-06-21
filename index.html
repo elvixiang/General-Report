@@ -267,7 +267,8 @@ async function aiCompile(btn){
     const res=await fetch(SCRIPT_URL.trim(),{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"compile",week:state.week,brands:brands})});
     const data=await res.json();
     if(data && data.ok && data.indo){
-      state.ai={indo:data.indo,english:data.english||data.indo,plan:data.plan||""};
+      const clean=s=>(s||"").replace(/\\r\\n|\\n|\\r/g,"\n").replace(/\n{3,}/g,"\n\n").trim();
+      state.ai={indo:clean(data.indo),english:clean(data.english||data.indo),plan:clean(data.plan)};
       sub.className="ai-sub"; sub.textContent="Selesai ✓ — cek di kanan, edit kalau perlu, terus copy.";
       render();
     } else { sub.className="ai-sub errc"; sub.textContent=(data&&data.error)?("AI: "+data.error):"Belum dapet hasil. Cek setting Apps Script."; }
