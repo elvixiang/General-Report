@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Laporan Mingguan GM</title>
+<title>Updated Report</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -159,7 +159,7 @@
     <div class="brand-line">
       <div class="stamp">BY</div>
       <div>
-        <h1>Weekly Recap</h1>
+        <h1>Updated Report</h1>
         <div class="sub">Rangkuman tiap brand → AI susun jadi laporan + langkah kamu</div>
       </div>
     </div>
@@ -374,7 +374,7 @@ function brandNote(bid){
 }
 function hasInput(){ return BRANDS.some(b=>topicCount(b.id)>0); }
 function draftText(lang){
-  const L = lang==="en" ? {title:"WEEKLY RECAP (draft)",date:"Date"} : {title:"WEEKLY RECAP (draft)",date:"Tanggal"};
+  const L = lang==="en" ? {title:"Updated Report (draft)",date:"Date"} : {title:"WEEKLY RECAP (draft)",date:"Tanggal"};
   const RULE="––––––––––––––––––––––"; const out=[];
   out.push(`§T${L.title}`); out.push(`§M${L.date}: ${nowDate()}`); out.push(`§R${RULE}`);
   let any=false;
