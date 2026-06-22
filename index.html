@@ -25,17 +25,26 @@
   .week-field{text-align:right;}
   .week-field label{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin-bottom:5px;}
   .week-field input{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 11px;text-align:right;width:170px;}
+  .week-field .reset-link{display:block;margin-top:7px;font-family:'Inter';font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;margin-left:auto;}
+  .week-field .reset-link:hover{color:var(--wine);}
+  .week-field .last-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin-bottom:4px;}
+  .week-field .last-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--ink);}
   .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start;}
   @media(max-width:920px){.grid{grid-template-columns:1fr;gap:20px;}}
   .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--wine);font-weight:600;margin:0 0 6px;display:flex;align-items:center;gap:9px;}
   .eyebrow::after{content:"";flex:1;height:1px;background:var(--line);}
   .eyebrow-note{font-size:12px;color:var(--muted);margin:0 0 14px;font-style:italic;}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 17px;margin-bottom:14px;transition:border-color .15s ease;}
-  .card:focus-within{border-color:var(--wine-soft);}
-  .card-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
-  .dot{width:11px;height:11px;border-radius:50%;flex:none;}
-  .bname{font-family:'Bricolage Grotesque';font-weight:700;font-size:16px;letter-spacing:-.01em;}
-  .bname small{display:block;font-family:'Inter';font-weight:400;font-size:11px;color:var(--muted);letter-spacing:0;}
+  .brand-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
+  .brand-tab{font-family:'Inter';font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:9px;padding:8px 13px;display:flex;align-items:center;gap:8px;transition:all .13s ease;}
+  .brand-tab .bdot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .brand-tab .cnt{font-size:10.5px;font-weight:600;background:var(--paper);color:var(--muted);border-radius:10px;padding:1px 7px;min-width:18px;text-align:center;}
+  .brand-tab[aria-selected="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper);}
+  .brand-tab[aria-selected="true"] .cnt{background:rgba(255,255,255,.18);color:#fff;}
+  .brand-tab:focus-visible{outline:2px solid var(--wine);outline-offset:2px;}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:6px;}
+  .panel-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+  .panel-title{font-family:'Bricolage Grotesque';font-weight:700;font-size:17px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px;}
+  .panel-title .pdot{width:12px;height:12px;border-radius:50%;}
   .seg{display:flex;gap:6px;margin-left:auto;}
   .seg button{font-family:'Inter';font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--line);background:var(--paper);color:var(--muted);border-radius:20px;padding:5px 11px;display:flex;align-items:center;gap:6px;transition:all .13s ease;}
   .seg button .sdot{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.5;}
@@ -45,10 +54,31 @@
   .seg button.warn[data-on="1"]{background:var(--amber);}
   .seg button.stop[data-on="1"]{background:var(--red);}
   .seg button:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
-  textarea{width:100%;font-family:'Inter';font-size:13.5px;color:var(--ink);border:1px solid var(--line);background:#FEFDFB;border-radius:9px;padding:10px 11px;min-height:70px;line-height:1.45;resize:vertical;transition:border-color .13s ease;}
-  textarea:focus{outline:none;border-color:var(--wine-soft);background:#fff;}
-  textarea::placeholder{color:#BCB2A2;}
-
+  .suggest{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+  .suggest span{font-size:11px;color:var(--muted);align-self:center;margin-right:2px;}
+  .chip{font-family:'Inter';font-size:11.5px;font-weight:500;cursor:pointer;border:1px dashed var(--line);background:#fff;color:var(--muted);border-radius:16px;padding:5px 11px;transition:all .13s ease;}
+  .chip:hover{border-color:var(--wine-soft);color:var(--wine);}
+  .topic{border:1px solid var(--line);border-radius:11px;margin-bottom:9px;overflow:hidden;background:#FEFDFB;transition:border-color .13s ease;}
+  .topic.open{border-color:var(--wine-soft);}
+  .topic-head{display:flex;align-items:center;gap:9px;padding:11px 13px;cursor:pointer;user-select:none;}
+  .topic-head .chev{color:var(--muted);font-size:12px;transition:transform .18s ease;flex:none;}
+  .topic.open .topic-head .chev{transform:rotate(90deg);}
+  .topic-name{font-weight:600;font-size:13.5px;color:var(--ink);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .topic-name.empty{color:#BCB2A2;font-weight:400;font-style:italic;}
+  .topic-del{color:#C4B9A8;font-size:13px;padding:2px 5px;border-radius:5px;flex:none;}
+  .topic-del:hover{color:var(--red);background:#FBEEEC;}
+  .topic-body{display:none;padding:0 13px 13px;}
+  .topic.open .topic-body{display:block;}
+  .topic-body label{display:block;font-size:11px;color:var(--muted);margin:6px 0 5px;}
+  .topic-body input,.topic-body textarea{width:100%;font-family:'Inter';font-size:13.5px;color:var(--ink);border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 10px;transition:border-color .13s ease;}
+  .topic-body textarea{min-height:62px;line-height:1.45;resize:vertical;margin-top:2px;}
+  .topic-body input:focus,.topic-body textarea:focus{outline:none;border-color:var(--wine-soft);}
+  .topic-body input::placeholder,.topic-body textarea::placeholder{color:#BCB2A2;}
+  .add-topic{width:100%;font-family:'Inter';font-size:13px;font-weight:600;cursor:pointer;border:1px dashed var(--wine-soft);background:#fff;color:var(--wine);border-radius:10px;padding:11px;margin-top:4px;transition:all .13s ease;}
+  .add-topic:hover{background:#FBF4F2;}
+  .empty-hint{font-size:12px;color:#A89C8B;font-style:italic;text-align:center;padding:6px 0 12px;}
+  .docket-col{position:sticky;top:20px;}
+  @media(max-width:920px){.docket-col{position:static;}}
   .compose{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px;margin-bottom:14px;}
   .ai-main{width:100%;font-family:'Inter';font-size:14px;font-weight:700;cursor:pointer;border:none;border-radius:10px;padding:14px;background:var(--wine);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:9px;transition:all .13s ease;}
   .ai-main:hover{background:var(--wine-soft);}
@@ -57,11 +87,8 @@
   .ai-sub{font-size:11.5px;color:var(--muted);text-align:center;margin-top:9px;min-height:15px;}
   .ai-sub.warnc{color:var(--amber);}
   .ai-sub.errc{color:var(--red);}
-
-  .docket-col{position:sticky;top:20px;}
-  @media(max-width:920px){.docket-col{position:static;}}
-  .tabs{display:flex;gap:7px;margin-bottom:12px;align-items:center;}
-  .tabs button{font-family:'Inter';font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:8px;padding:8px 16px;transition:all .13s ease;letter-spacing:.02em;}
+  .tabs{display:flex;gap:7px;margin-bottom:12px;align-items:center;flex-wrap:wrap;}
+  .tabs button{font-family:'Inter';font-size:12.5px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:8px;padding:8px 14px;transition:all .13s ease;letter-spacing:.02em;}
   .tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink);}
   .tabs button:focus-visible{outline:2px solid var(--wine);outline-offset:2px;}
   .badge{margin-left:auto;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:4px 9px;border-radius:6px;background:var(--paper);border:1px solid var(--line);}
@@ -73,8 +100,6 @@
   .docket .d-title{font-weight:700;font-size:13.5px;color:var(--ink);letter-spacing:.02em;}
   .docket .d-meta{color:var(--muted);}
   .docket .rule{color:#CDBFA8;}
-  .docket .sect{font-weight:700;color:var(--wine);letter-spacing:.04em;}
-  .docket .sect.alert{color:var(--red);}
   .docket .empty{color:#BBAF9C;font-style:italic;font-family:'Inter';font-size:12.5px;line-height:1.6;}
   .actions{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
   .btn{font-family:'Inter';font-size:13px;font-weight:600;cursor:pointer;border-radius:9px;padding:11px 15px;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px;transition:all .13s ease;flex:1;justify-content:center;}
@@ -91,6 +116,7 @@
   .sync-note{font-size:11.5px;color:var(--muted);margin-top:9px;min-height:16px;text-align:center;}
   .sync-note.err{color:var(--red);}
   .sync-note.good{color:var(--green);}
+  .saved-pill{font-size:11px;color:var(--muted);text-align:center;margin-top:10px;}
   @media(prefers-reduced-motion:reduce){*{transition:none !important;}}
 </style>
 </head>
@@ -98,31 +124,32 @@
 <div class="wrap">
   <header class="top">
     <div class="brand-line">
-      <div class="stamp">BY</div>
+      <div class="stamp">X</div>
       <div>
-        <h1>Laporan Mingguan GM</h1>
-        <div class="sub">Buang isi kepala per brand → AI susun jadi laporan rapi → copy ke WA</div>
+        <h1>Updated Report</h1>
+        <div class="sub">Rangkuman tiap brand → AI susun jadi laporan + langkah kamu</div>
       </div>
     </div>
     <div class="week-field">
-      <label for="week">Periode minggu</label>
-      <input id="week" class="line" type="text" style="font-family:'JetBrains Mono';font-size:14px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 11px;text-align:right;width:170px;" />
+      <div class="last-label">Terakhir diupdate</div>
+      <div class="last-val" id="lastUpdated">—</div>
+      <button class="reset-link" onclick="resetAll()">↺ Mulai sesi baru (hapus semua)</button>
     </div>
   </header>
 
   <div class="grid">
     <section>
       <p class="eyebrow">Update per brand</p>
-      <p class="eyebrow-note">Tulis bebas — sependek atau seberantakan apa pun. Nggak usah dirapihin, itu tugas AI nanti.</p>
-      <div id="brand-cards"></div>
+      <p class="eyebrow-note">Pilih tab brand, tandai status, lalu tambah topik (cth: domain, marketing, staff) dan isi keterangannya. Semua kesimpen otomatis.</p>
+      <div class="brand-tabs" id="brandTabs" role="tablist"></div>
+      <div id="brandPanel"></div>
     </section>
 
     <section class="docket-col">
       <div class="compose">
         <button class="ai-main" id="composeBtn" onclick="aiCompile(this)">✨ Susun laporan dengan AI</button>
-        <div class="ai-sub" id="aiSub">AI baca update kamu → simpulin keputusan boss, angka, & fokus → rapihin per brand</div>
+        <div class="ai-sub" id="aiSub">AI baca semua topik → rapihin laporan + simpulin langkah kamu minggu depan</div>
       </div>
-
       <div class="tabs" role="tablist">
         <button role="tab" id="tab-id" aria-selected="true" onclick="setLang('id')">Laporan (ID)</button>
         <button role="tab" id="tab-en" aria-selected="false" onclick="setLang('en')">English</button>
@@ -145,25 +172,62 @@
 
 <script>
 /* ============== CONFIG ============== */
-/* URL Web app Apps Script kamu — buat AI nyusun + simpan ke sheet. Kosongin dulu nggak apa-apa. */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby7xOwFdPxo5BV9QPmCNqYcGocBpmOQZa6mYGV7y7fv5xJKpa2nqEEWPiF2kGHBYk2QRg/exec";
+const SCRIPT_URL = "";
+const LS_KEY = "gm_updated_report_v1";
 
 /* ============== DATA ============== */
 const BRANDS = [
-  { id:"noodle", name:"No. 25 Minced Meat Noodle", tag:"Mie",        color:"var(--b-noodle)", eg:"contoh: sales naik tipis, kontraktor outlet baru molor seminggu, lagi mikir mau tambah menu" },
-  { id:"soya",   name:"SOYA SUKA",                 tag:"Outlet",      color:"var(--b-soya)",   eg:"contoh: fit-out MOI hampir kelar tapi bid Tomi & Studio belum fix, butuh approval budget" },
-  { id:"monty",  name:"MONTY&Co.",                 tag:"Tea / Monty", color:"var(--b-monty)",  eg:"contoh: urusan trademark Monty jalan, lagi nungguin DJKI" },
-  { id:"yonai",  name:"Yo-Nai",                    tag:"Yoghurt",     color:"var(--b-yonai)",  eg:"contoh: BPOM masih proses, packaging booth belum kelar, ragu timeline launch bulan depan" },
+  { id:"noodle", name:"No. 25 Minced Meat Noodle", short:"No. 25", color:"var(--b-noodle)" },
+  { id:"soya",   name:"SOYA SUKA",                 short:"Soya Suka", color:"var(--b-soya)" },
+  { id:"monty",  name:"MONTY&Co.",                 short:"Monty&Co.", color:"var(--b-monty)" },
+  { id:"yonai",  name:"Yo-Nai",                    short:"Yo-Nai", color:"var(--b-yonai)" },
 ];
 const STATUSES = [
   { key:"ok",   cls:"ok",   id:"On track",     en:"On track", emoji:"🟢" },
   { key:"warn", cls:"warn", id:"Ada hambatan", en:"Blocker",  emoji:"🟡" },
   { key:"stop", cls:"stop", id:"Stuck",        en:"Stuck",    emoji:"🔴" },
 ];
-const state = { week:"", lang:"id", brands:{}, ai:null };  // ai = {indo, english} setelah disusun
-BRANDS.forEach(b => state.brands[b.id] = { status:"ok", note:"" });
+const SUGGEST = ["Operasional","Marketing","Staff / HR","Outlet / Store","Project / Progress","Keuangan"];
 
-/* ============== INIT ============== */
+let topicSeq = 1;
+const state = { lang:"id", activeBrand:"noodle", brands:{}, ai:null, dirty:false, savedAt:null };
+BRANDS.forEach(b => state.brands[b.id] = { status:"ok", topics:[] });
+
+const MONTHS=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+function nowDate(){ const d=new Date(); return d.getDate()+" "+MONTHS[d.getMonth()]+" "+d.getFullYear(); }
+function fmtDateTime(d){ return d.getDate()+" "+MONTHS[d.getMonth()]+" "+d.getFullYear()+", "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+
+/* ============== PERSISTENCE ============== */
+function saveState(){
+  try{
+    localStorage.setItem(LS_KEY, JSON.stringify({
+      v:1, lang:state.lang, activeBrand:state.activeBrand,
+      topicSeq:topicSeq, brands:state.brands, ai:state.ai, dirty:state.dirty,
+      savedAt:new Date().toISOString()
+    }));
+    showSaved();
+  }catch(e){ /* preview sandbox / storage off — abaikan */ }
+}
+function loadState(){
+  try{
+    const raw=localStorage.getItem(LS_KEY); if(!raw) return false;
+    const d=JSON.parse(raw);
+    if(d.lang) state.lang=d.lang;
+    if(d.activeBrand) state.activeBrand=d.activeBrand;
+    if(typeof d.topicSeq==="number") topicSeq=d.topicSeq;
+    if(d.brands){ BRANDS.forEach(b=>{ if(d.brands[b.id]) state.brands[b.id]={ status:d.brands[b.id].status||"ok", topics:(d.brands[b.id].topics||[]).map(t=>({id:t.id,name:t.name||"",detail:t.detail||"",open:!!t.open})) }; }); }
+    state.ai = d.ai || null;
+    state.dirty = !!d.dirty;
+    state.savedAt = d.savedAt || null;
+    return true;
+  }catch(e){ return false; }
+}
+function showSaved(){
+  const p=document.getElementById("lastUpdated"); if(!p) return;
+  p.textContent=fmtDateTime(new Date());
+}
+
+/* ============== HELPERS ============== */
 function currentWeekLabel(){
   const now=new Date(); const day=(now.getDay()+6)%7;
   const mon=new Date(now); mon.setDate(now.getDate()-day);
@@ -173,104 +237,172 @@ function currentWeekLabel(){
   return sm ? `${mon.getDate()}–${fri.getDate()} ${M[fri.getMonth()]} ${fri.getFullYear()}`
             : `${mon.getDate()} ${M[mon.getMonth()]} – ${fri.getDate()} ${M[fri.getMonth()]} ${fri.getFullYear()}`;
 }
-function buildBrandCards(){
-  const root=document.getElementById("brand-cards");
-  root.innerHTML=BRANDS.map(b=>`
-    <div class="card" data-brand="${b.id}">
-      <div class="card-head">
-        <span class="dot" style="background:${b.color}"></span>
-        <span class="bname">${b.name}<small>${b.tag}</small></span>
+function escapeHtml(s){return (s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+function brandById(id){ return BRANDS.find(b=>b.id===id); }
+function topicCount(id){ return state.brands[id].topics.filter(t=>t.name.trim()||t.detail.trim()).length; }
+
+/* mark an edit: keep AI result visible but flag it stale, persist, refresh UI */
+function touched(){ state.dirty = !!state.ai; saveState(); renderBrandTabs(); render(); updateComposeUI(); }
+
+/* ============== BRAND TABS ============== */
+function renderBrandTabs(){
+  const host=document.getElementById("brandTabs");
+  host.innerHTML=BRANDS.map(b=>{
+    const c=topicCount(b.id);
+    const sel=b.id===state.activeBrand;
+    return `<button role="tab" class="brand-tab" aria-selected="${sel}" onclick="setActiveBrand('${b.id}')">
+      <span class="bdot" style="background:${b.color}"></span>${b.short}
+      ${c?`<span class="cnt">${c}</span>`:``}
+    </button>`;
+  }).join("");
+}
+function setActiveBrand(id){ state.activeBrand=id; saveState(); renderBrandTabs(); renderPanel(); }
+
+/* ============== BRAND PANEL ============== */
+function renderPanel(){
+  const b=brandById(state.activeBrand);
+  const s=state.brands[b.id];
+  const host=document.getElementById("brandPanel");
+  host.innerHTML=`
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title"><span class="pdot" style="background:${b.color}"></span>${b.name}</span>
         <div class="seg" role="group" aria-label="Status ${b.name}">
-          ${STATUSES.map(s=>`<button type="button" class="${s.cls}" data-st="${s.key}" data-on="${s.key==='ok'?1:0}" onclick="setStatus('${b.id}','${s.key}')"><span class="sdot"></span>${s.id}</button>`).join("")}
+          ${STATUSES.map(st=>`<button type="button" class="${st.cls}" data-st="${st.key}" data-on="${s.status===st.key?1:0}" onclick="setStatus('${b.id}','${st.key}')"><span class="sdot"></span>${st.id}</button>`).join("")}
         </div>
       </div>
-      <textarea data-b="${b.id}" placeholder="${b.eg}"></textarea>
+      <div class="suggest"><span>Cepat tambah:</span>${SUGGEST.map(n=>`<button class="chip" onclick="addTopic('${b.id}','${n}')">+ ${n}</button>`).join("")}</div>
+      <div id="topicList"></div>
+      ${s.topics.length?``:`<div class="empty-hint">Belum ada topik. Klik salah satu di atas atau tombol di bawah.</div>`}
+      <button class="add-topic" onclick="addTopic('${b.id}','')">+ Tambah topik kosong</button>
+    </div>`;
+  renderTopics();
+}
+function renderTopics(){
+  const b=brandById(state.activeBrand);
+  const s=state.brands[b.id];
+  const list=document.getElementById("topicList");
+  if(!list) return;
+  list.innerHTML=s.topics.map(t=>`
+    <div class="topic ${t.open?'open':''}" data-t="${t.id}">
+      <div class="topic-head" onclick="toggleTopic('${t.id}')">
+        <span class="chev">▸</span>
+        <span class="topic-name ${t.name.trim()?'':'empty'}" id="tn-${t.id}">${t.name.trim()?escapeHtml(t.name):'Topik baru'}</span>
+        <span class="topic-del" title="Hapus" onclick="event.stopPropagation();deleteTopic('${t.id}')">✕</span>
+      </div>
+      <div class="topic-body">
+        <label>Nama topik</label>
+        <input class="t-name" data-t="${t.id}" placeholder="cth: domain" />
+        <label>Keterangan</label>
+        <textarea class="t-detail" data-t="${t.id}" placeholder="cth: progress beli domain sampai mana, harga berapa"></textarea>
+      </div>
     </div>`).join("");
-  root.querySelectorAll("textarea[data-b]").forEach(t=>{
-    t.addEventListener("input",e=>{ state.brands[e.target.dataset.b].note=e.target.value; state.ai=null; render(); });
+  s.topics.forEach(t=>{
+    const ni=list.querySelector(`.t-name[data-t="${t.id}"]`);
+    const di=list.querySelector(`.t-detail[data-t="${t.id}"]`);
+    if(ni){ ni.value=t.name; ni.addEventListener("input",e=>{ t.name=e.target.value; const lbl=document.getElementById("tn-"+t.id); if(lbl){ lbl.textContent=t.name.trim()||'Topik baru'; lbl.className="topic-name "+(t.name.trim()?'':'empty'); } touched(); }); }
+    if(di){ di.value=t.detail; di.addEventListener("input",e=>{ t.detail=e.target.value; touched(); }); }
   });
 }
-function setStatus(bid,key){
-  state.brands[bid].status=key; state.ai=null;
-  document.querySelectorAll(`.card[data-brand="${bid}"] .seg button`).forEach(b=>b.dataset.on=b.dataset.st===key?1:0);
-  render();
+function setStatus(bid,key){ state.brands[bid].status=key; state.dirty=!!state.ai; renderPanel(); saveState(); renderBrandTabs(); render(); updateComposeUI(); }
+function addTopic(bid,name){
+  if(bid!==state.activeBrand){ state.activeBrand=bid; }
+  state.brands[bid].topics.push({ id:"t"+(topicSeq++), name:name||"", detail:"", open:true });
+  state.dirty=!!state.ai; renderPanel(); renderBrandTabs(); saveState(); render(); updateComposeUI();
+  const arr=state.brands[bid].topics; const last=arr[arr.length-1];
+  const sel = name ? `.t-detail[data-t="${last.id}"]` : `.t-name[data-t="${last.id}"]`;
+  const el=document.querySelector(sel); if(el) el.focus();
 }
-function setLang(l){
-  state.lang=l;
-  document.getElementById("tab-id").setAttribute("aria-selected",l==="id");
-  document.getElementById("tab-en").setAttribute("aria-selected",l==="en");
-  document.getElementById("tab-plan").setAttribute("aria-selected",l==="plan");
-  render();
+function toggleTopic(tid){
+  const t=state.brands[state.activeBrand].topics.find(x=>x.id===tid);
+  if(t){ t.open=!t.open; renderTopics(); saveState(); }
+}
+function deleteTopic(tid){
+  const s=state.brands[state.activeBrand];
+  s.topics=s.topics.filter(x=>x.id!==tid);
+  state.dirty=!!state.ai; renderPanel(); renderBrandTabs(); saveState(); render(); updateComposeUI();
 }
 
-/* ============== DRAFT COMPILE (sebelum AI) ============== */
+/* ============== DRAFT ============== */
+function brandNote(bid){
+  return state.brands[bid].topics.filter(t=>t.name.trim()||t.detail.trim())
+    .map(t=>`${t.name.trim()||'(topik)'}: ${t.detail.trim()}`).join("\n");
+}
+function hasInput(){ return BRANDS.some(b=>topicCount(b.id)>0); }
 function draftText(lang){
-  const L = lang==="en" ? {title:"WEEKLY REPORT — GM (draft)",week:"Week"} : {title:"LAPORAN MINGGUAN — GM (draft)",week:"Periode"};
+  const L = lang==="en" ? {title:"Updated Report (draft)",date:"Date"} : {title:"Updated Report (draft)",date:"Tanggal"};
   const RULE="––––––––––––––––––––––"; const out=[];
-  out.push(`§T${L.title}`); out.push(`§M${L.week}: ${state.week||"—"}`); out.push(`§R${RULE}`);
+  out.push(`§T${L.title}`); out.push(`§M${L.date}: ${nowDate()}`); out.push(`§R${RULE}`);
   let any=false;
   BRANDS.forEach(b=>{
     const s=state.brands[b.id]; const st=STATUSES.find(x=>x.key===s.status);
+    const tops=s.topics.filter(t=>t.name.trim()||t.detail.trim());
+    if(!tops.length) return; any=true;
     out.push(`§H${st.emoji} ${b.name} — ${lang==="en"?st.en:st.id}`);
-    if(s.note.trim()){ any=true; out.push(`   ${s.note.trim()}`); }
+    tops.forEach(t=>{ out.push(`   • ${t.name.trim()||'(topik)'}${t.detail.trim()?': '+t.detail.trim():''}`); });
+    out.push("§B");
   });
-  if(!any) return null;
-  return out;
+  if(!any) return null; return out;
 }
-function hasInput(){ return BRANDS.some(b=>state.brands[b.id].note.trim()); }
 
-/* ============== RENDER ============== */
+/* ============== RIGHT TABS / RENDER ============== */
+function setLang(l){ state.lang=l; ["id","en","plan"].forEach(k=>document.getElementById("tab-"+k).setAttribute("aria-selected",l===k)); saveState(); render(); }
 function render(){
   const docket=document.getElementById("docket");
   const badge=document.getElementById("badge");
   if(state.ai){
-    badge.textContent = state.lang==="plan" ? "Buat kamu" : "Disusun AI";
+    badge.textContent = state.lang==="plan" ? "Buat kamu" : (state.dirty?"Perlu update":"Disusun AI");
     badge.className="badge ai";
-    if(state.lang==="plan"){ docket.textContent = state.ai.plan || "Rencana belum tersedia — susun ulang laporannya."; }
-    else { docket.textContent = state.lang==="en" ? state.ai.english : state.ai.indo; }
+    docket.textContent = state.lang==="plan" ? (state.ai.plan||"Rencana belum tersedia — susun ulang.") : (state.lang==="en"?state.ai.english:state.ai.indo);
     return;
   }
   badge.textContent="Draft"; badge.className="badge";
   if(state.lang==="plan"){
-    docket.innerHTML=`<span class="empty">Tab ini isinya rencana kerja kamu — apa yang harus kamu lakuin minggu depan, dipilihin yang penting. Muncul setelah kamu klik “Susun laporan dengan AI”.</span>`;
-    return;
+    docket.innerHTML=`<span class="empty">Tab ini isinya langkah kerja kamu minggu depan, dipilihin yang penting. Muncul setelah kamu klik “Susun laporan dengan AI”.</span>`; return;
   }
-  const lines = draftText(state.lang);
-  if(!lines){
-    docket.innerHTML=`<span class="empty">Isi update minimal satu brand di kiri, lalu klik “Susun laporan dengan AI”. Versi draft mentah muncul di sini, versi rapinya setelah disusun.</span>`;
-    return;
-  }
+  const lines=draftText(state.lang);
+  if(!lines){ docket.innerHTML=`<span class="empty">Tambah minimal satu topik di brand mana pun, lalu klik “Susun laporan dengan AI”. Draft mentah muncul di sini, versi rapinya setelah disusun.</span>`; return; }
   docket.innerHTML=lines.map(l=>{
     const tag=l.slice(0,2), txt=escapeHtml(l.slice(2));
     if(tag==="§T")return `<span class="d-title">${txt}</span>`;
     if(tag==="§M")return `<span class="d-meta">${txt}</span>`;
     if(tag==="§R")return `<span class="rule">${txt}</span>`;
+    if(tag==="§B")return ``;
     if(tag==="§H")return `<span>${txt}</span>`;
     return `<span>${escapeHtml(l)}</span>`;
   }).join("\n");
 }
-function escapeHtml(s){return s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
 function currentText(){
   if(!state.ai) return document.getElementById("docket").innerText;
-  if(state.lang==="plan") return state.ai.plan || "";
-  return state.lang==="en" ? state.ai.english : state.ai.indo;
+  if(state.lang==="plan") return state.ai.plan||"";
+  return state.lang==="en"?state.ai.english:state.ai.indo;
+}
+function updateComposeUI(){
+  const btn=document.getElementById("composeBtn"); if(!btn) return;
+  btn.textContent = state.ai ? "✨ Update laporan" : "✨ Susun laporan dengan AI";
+  if(state.ai && state.dirty){
+    const sub=document.getElementById("aiSub");
+    sub.className="ai-sub warnc";
+    sub.textContent="Ada perubahan — klik Update biar laporan & Langkah Kamu ikut ke-update.";
+  }
 }
 
 /* ============== AI SUSUN ============== */
 async function aiCompile(btn){
   const sub=document.getElementById("aiSub");
-  if(!hasInput()){ sub.className="ai-sub warnc"; sub.textContent="Isi update minimal satu brand dulu ya."; return; }
-  if(!SCRIPT_URL.trim()){ sub.className="ai-sub warnc"; sub.textContent="AI belum aktif — ikutin panduan setup sekali dulu (lihat chat)."; return; }
+  if(!hasInput()){ sub.className="ai-sub warnc"; sub.textContent="Tambah minimal satu topik dulu ya."; return; }
+  if(!SCRIPT_URL.trim()){ sub.className="ai-sub warnc"; sub.textContent="AI belum aktif — colok URL Apps Script ke SCRIPT_URL dulu."; return; }
   btn.disabled=true; sub.className="ai-sub"; sub.textContent="AI lagi nyusun laporan…";
-  const brands=BRANDS.map(b=>({ name:b.name, status:STATUSES.find(x=>x.key===state.brands[b.id].status).id, note:state.brands[b.id].note.trim() }));
+  const brands=BRANDS.map(b=>({ name:b.name, status:STATUSES.find(x=>x.key===state.brands[b.id].status).id, note:brandNote(b.id) }));
   try{
-    const res=await fetch(SCRIPT_URL.trim(),{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"compile",week:state.week,brands:brands})});
+    const res=await fetch(SCRIPT_URL.trim(),{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"compile",week:nowDate(),brands:brands})});
     const data=await res.json();
     if(data && data.ok && data.indo){
       const clean=s=>(s||"").replace(/\\r\\n|\\n|\\r/g,"\n").replace(/\n{3,}/g,"\n\n").trim();
       state.ai={indo:clean(data.indo),english:clean(data.english||data.indo),plan:clean(data.plan)};
+      state.dirty=false; saveState();
       sub.className="ai-sub"; sub.textContent="Selesai ✓ — cek di kanan, edit kalau perlu, terus copy.";
-      render();
+      render(); updateComposeUI();
     } else { sub.className="ai-sub errc"; sub.textContent=(data&&data.error)?("AI: "+data.error):"Belum dapet hasil. Cek setting Apps Script."; }
   }catch(e){ sub.className="ai-sub errc"; sub.textContent="Gagal nyambung. Cek URL Apps Script & koneksi."; }
   finally{ btn.disabled=false; }
@@ -287,22 +419,34 @@ async function copyDocket(btn){
 async function sendToSheet(btn){
   const url=SCRIPT_URL.trim(); const note=document.getElementById("syncNote"); note.className="sync-note";
   if(!url){ note.className="sync-note err"; note.textContent="SCRIPT_URL belum diisi di file index.html."; return; }
-  const indo = state.ai ? state.ai.indo : (draftText("id")||[]).map(l=>l.replace(/^§[TMRH]/,"")).join("\n");
-  const english = state.ai ? state.ai.english : (draftText("en")||[]).map(l=>l.replace(/^§[TMRH]/,"")).join("\n");
+  const strip=lines=>(lines||[]).map(l=>l.replace(/^§[TMRHB]/,"")).filter(x=>x!=="").join("\n");
+  const indo = state.ai ? state.ai.indo : strip(draftText("id"));
+  const english = state.ai ? state.ai.english : strip(draftText("en"));
   btn.disabled=true; note.textContent="Menyimpan…";
   try{
-    await fetch(url,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"save",week:state.week,indo:indo,english:english})});
+    await fetch(url,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"save",week:nowDate(),indo:indo,english:english,plan:state.ai?state.ai.plan:""})});
     note.className="sync-note good"; note.textContent="Tersimpan ke Spreadsheet ✓"; flash(btn);
   }catch(e){ note.className="sync-note err"; note.textContent="Gagal kirim. Cek URL & akses 'Anyone' di Apps Script."; }
   finally{ btn.disabled=false; }
 }
 
+function resetAll(){
+  let ok=true; try{ ok=window.confirm("Hapus semua isi dan mulai dari kosong? Nggak bisa dibatalkan."); }catch(e){}
+  if(!ok) return;
+  BRANDS.forEach(b=>state.brands[b.id]={status:"ok",topics:[]});
+  state.ai=null; state.dirty=false; state.activeBrand=BRANDS[0].id; topicSeq=1; state.savedAt=null;
+  try{ localStorage.removeItem(LS_KEY); }catch(e){}
+  const sub=document.getElementById("aiSub"); sub.className="ai-sub"; sub.textContent="AI baca semua topik → rapihin laporan + simpulin langkah kamu minggu depan";
+  const lu=document.getElementById("lastUpdated"); if(lu) lu.textContent="—";
+  renderBrandTabs(); renderPanel(); render(); updateComposeUI();
+}
+
 /* ============== BOOT ============== */
 function boot(){
-  state.week=currentWeekLabel();
-  const wk=document.getElementById("week"); wk.value=state.week;
-  wk.addEventListener("input",e=>{ state.week=e.target.value; state.ai=null; render(); });
-  buildBrandCards(); render();
+  loadState();
+  if(state.savedAt){ try{ document.getElementById("lastUpdated").textContent=fmtDateTime(new Date(state.savedAt)); }catch(e){} }
+  ["id","en","plan"].forEach(k=>document.getElementById("tab-"+k).setAttribute("aria-selected",state.lang===k));
+  renderBrandTabs(); renderPanel(); render(); updateComposeUI();
 }
 boot();
 </script>
