@@ -124,9 +124,9 @@
 <div class="wrap">
   <header class="top">
     <div class="brand-line">
-      <div class="stamp">BY</div>
+      <div class="stamp">X</div>
       <div>
-        <h1>Weekly Recap</h1>
+        <h1>Updated Report</h1>
         <div class="sub">Rangkuman tiap brand → AI susun jadi laporan + langkah kamu</div>
       </div>
     </div>
@@ -172,7 +172,7 @@
 
 <script>
 /* ============== CONFIG ============== */
-const SCRIPT_URL = "";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby7xOwFdPxo5BV9QPmCNqYcGocBpmOQZa6mYGV7y7fv5xJKpa2nqEEWPiF2kGHBYk2QRg/exec";
 const LS_KEY = "gm_weekly_recap_v1";
 
 /* ============== DATA ============== */
@@ -330,7 +330,7 @@ function brandNote(bid){
 }
 function hasInput(){ return BRANDS.some(b=>topicCount(b.id)>0); }
 function draftText(lang){
-  const L = lang==="en" ? {title:"WEEKLY RECAP (draft)",date:"Date"} : {title:"WEEKLY RECAP (draft)",date:"Tanggal"};
+  const L = lang==="en" ? {title:"UPDATED REPORT (draft)",date:"Date"} : {title:"UPDATED REPORT (draft)",date:"Tanggal"};
   const RULE="––––––––––––––––––––––"; const out=[];
   out.push(`§T${L.title}`); out.push(`§M${L.date}: ${nowDate()}`); out.push(`§R${RULE}`);
   let any=false;
