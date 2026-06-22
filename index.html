@@ -116,12 +116,37 @@
   .sync-note{font-size:11.5px;color:var(--muted);margin-top:9px;min-height:16px;text-align:center;}
   .sync-note.err{color:var(--red);}
   .sync-note.good{color:var(--green);}
+  .login-gate{position:fixed;inset:0;background:var(--paper);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;}
+  .login-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px 26px;width:100%;max-width:360px;box-shadow:0 12px 30px rgba(42,32,24,.12);}
+  .login-stamp{width:44px;height:44px;border-radius:10px;background:var(--wine);color:#fff;display:grid;place-items:center;font-family:'Bricolage Grotesque';font-weight:800;font-size:21px;margin-bottom:16px;}
+  .login-card h2{font-family:'Bricolage Grotesque';font-weight:800;font-size:22px;margin:0 0 4px;letter-spacing:-.01em;}
+  .login-hint{font-size:12.5px;color:var(--muted);margin:0 0 18px;}
+  .login-card label{display:block;font-size:11px;color:var(--muted);margin:12px 0 5px;font-weight:500;}
+  .login-card input{width:100%;font-family:'Inter';font-size:14px;color:var(--ink);border:1px solid var(--line);background:#FEFDFB;border-radius:9px;padding:10px 12px;}
+  .login-card input:focus{outline:none;border-color:var(--wine-soft);background:#fff;}
+  .login-btn{width:100%;margin-top:18px;font-family:'Inter';font-size:14px;font-weight:700;cursor:pointer;border:none;border-radius:10px;padding:13px;background:var(--wine);color:#fff;transition:background .13s ease;}
+  .login-btn:hover{background:var(--wine-soft);}
+  .login-btn:disabled{background:#C9BEAF;cursor:not-allowed;}
+  .login-err{font-size:12px;color:var(--red);margin-top:10px;min-height:16px;text-align:center;}
   .saved-pill{font-size:11px;color:var(--muted);text-align:center;margin-top:10px;}
   @media(prefers-reduced-motion:reduce){*{transition:none !important;}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div id="loginGate" class="login-gate" style="display:none;">
+  <div class="login-card">
+    <div class="login-stamp">X</div>
+    <h2>Updated Report</h2>
+    <p class="login-hint">Masuk dulu buat lanjut.</p>
+    <label for="loginUser">User ID</label>
+    <input id="loginUser" type="text" autocomplete="username" />
+    <label for="loginPass">Password</label>
+    <input id="loginPass" type="password" autocomplete="current-password" />
+    <button class="login-btn" id="loginBtn" onclick="doLogin(this)">Masuk</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+<div class="wrap" style="display:none;">
   <header class="top">
     <div class="brand-line">
       <div class="stamp">X</div>
@@ -134,6 +159,7 @@
       <div class="last-label">Terakhir diupdate</div>
       <div class="last-val" id="lastUpdated">—</div>
       <button class="reset-link" onclick="resetAll()">↺ RESET</button>
+      <button class="reset-link" onclick="logout()">⎋ Keluar</button>
     </div>
   </header>
 
@@ -172,7 +198,7 @@
 
 <script>
 /* ============== CONFIG ============== */
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby7xOwFdPxo5BV9QPmCNqYcGocBpmOQZa6mYGV7y7fv5xJKpa2nqEEWPiF2kGHBYk2QRg/exec";
+const SCRIPT_URL = "";
 const LS_KEY = "gm_weekly_recap_v1";
 
 /* ============== DATA ============== */
@@ -330,7 +356,7 @@ function brandNote(bid){
 }
 function hasInput(){ return BRANDS.some(b=>topicCount(b.id)>0); }
 function draftText(lang){
-  const L = lang==="en" ? {title:"UPDATED REPORT (draft)",date:"Date"} : {title:"UPDATED REPORT (draft)",date:"Tanggal"};
+  const L = lang==="en" ? {title:"Updated Report (draft)",date:"Date"} : {title:"WEEKLY RECAP (draft)",date:"Tanggal"};
   const RULE="––––––––––––––––––––––"; const out=[];
   out.push(`§T${L.title}`); out.push(`§M${L.date}: ${nowDate()}`); out.push(`§R${RULE}`);
   let any=false;
@@ -441,12 +467,39 @@ function resetAll(){
   renderBrandTabs(); renderPanel(); render(); updateComposeUI();
 }
 
+/* ============== LOGIN (whitelist di sheet) ============== */
+const AUTH_KEY="updated_report_auth_v1";
+const AUTH_DAYS=14;
+function isAuthed(){
+  try{ const a=JSON.parse(localStorage.getItem(AUTH_KEY)||"null"); return !!(a&&a.ts&&(Date.now()-a.ts)<AUTH_DAYS*86400000); }catch(e){ return false; }
+}
+function revealApp(){ const g=document.getElementById("loginGate"); if(g) g.style.display="none"; document.querySelector(".wrap").style.display=""; }
+function showGate(){ const g=document.getElementById("loginGate"); if(g) g.style.display="flex"; document.querySelector(".wrap").style.display="none"; const u=document.getElementById("loginUser"); if(u) u.focus(); }
+async function doLogin(btn){
+  const err=document.getElementById("loginErr");
+  const uid=document.getElementById("loginUser").value.trim();
+  const pw=document.getElementById("loginPass").value;
+  if(!uid||!pw){ err.textContent="Isi User ID & password."; return; }
+  if(!SCRIPT_URL.trim()){ err.textContent="SCRIPT_URL belum diisi — login butuh Apps Script aktif."; return; }
+  btn.disabled=true; err.style.color="var(--muted)"; err.textContent="Mengecek…";
+  try{
+    const res=await fetch(SCRIPT_URL.trim(),{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"login",userid:uid,password:pw})});
+    const data=await res.json();
+    if(data && data.ok){ try{ localStorage.setItem(AUTH_KEY,JSON.stringify({nama:data.nama||uid,ts:Date.now()})); }catch(e){} err.textContent=""; revealApp(); }
+    else { err.style.color="var(--red)"; err.textContent=(data&&data.error)||"ID atau password salah."; }
+  }catch(e){ err.style.color="var(--red)"; err.textContent="Gagal nyambung ke server. Cek URL Apps Script."; }
+  finally{ btn.disabled=false; }
+}
+function logout(){ try{ localStorage.removeItem(AUTH_KEY); }catch(e){} const p=document.getElementById("loginPass"); if(p) p.value=""; showGate(); }
+
 /* ============== BOOT ============== */
 function boot(){
   loadState();
   if(state.savedAt){ try{ document.getElementById("lastUpdated").textContent=fmtDateTime(new Date(state.savedAt)); }catch(e){} }
   ["id","en","plan"].forEach(k=>document.getElementById("tab-"+k).setAttribute("aria-selected",state.lang===k));
   renderBrandTabs(); renderPanel(); render(); updateComposeUI();
+  const lp=document.getElementById("loginPass"); if(lp) lp.addEventListener("keydown",e=>{ if(e.key==="Enter") doLogin(document.getElementById("loginBtn")); });
+  if(!SCRIPT_URL.trim() || isAuthed()){ revealApp(); } else { showGate(); }
 }
 boot();
 </script>
