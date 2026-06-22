@@ -76,6 +76,14 @@
   .topic-body input::placeholder,.topic-body textarea::placeholder{color:#BCB2A2;}
   .add-topic{width:100%;font-family:'Inter';font-size:13px;font-weight:600;cursor:pointer;border:1px dashed var(--wine-soft);background:#fff;color:var(--wine);border-radius:10px;padding:11px;margin-top:4px;transition:all .13s ease;}
   .add-topic:hover{background:#FBF4F2;}
+  .topic-tools{display:flex;gap:14px;justify-content:flex-end;align-items:center;margin:0 2px 10px;}
+  .topic-tools button{font-family:'Inter';font-size:11.5px;font-weight:500;color:var(--muted);background:none;border:none;cursor:pointer;padding:0;}
+  .topic-tools button:hover{color:var(--wine);}
+  .topic-done{font-family:'Inter';font-size:10.5px;font-weight:700;letter-spacing:.04em;cursor:pointer;border:1px solid var(--green);color:var(--green);background:#fff;border-radius:14px;padding:3px 9px;flex:none;transition:all .13s ease;}
+  .topic-done:hover{background:#EAF5EF;}
+  .topic-done.on{background:var(--green);color:#fff;border-color:var(--green);}
+  .topic.done{background:#F3F8F4;border-color:#BFE0CC;}
+  .topic.done .topic-name{text-decoration:line-through;color:var(--muted);}
   .empty-hint{font-size:12px;color:#A89C8B;font-style:italic;text-align:center;padding:6px 0 12px;}
   .docket-col{position:sticky;top:20px;}
   @media(max-width:920px){.docket-col{position:static;}}
@@ -149,9 +157,9 @@
 <div class="wrap" style="display:none;">
   <header class="top">
     <div class="brand-line">
-      <div class="stamp">X</div>
+      <div class="stamp">BY</div>
       <div>
-        <h1>Updated Report</h1>
+        <h1>Weekly Recap</h1>
         <div class="sub">Rangkuman tiap brand → AI susun jadi laporan + langkah kamu</div>
       </div>
     </div>
@@ -241,7 +249,7 @@ function loadState(){
     if(d.lang) state.lang=d.lang;
     if(d.activeBrand) state.activeBrand=d.activeBrand;
     if(typeof d.topicSeq==="number") topicSeq=d.topicSeq;
-    if(d.brands){ BRANDS.forEach(b=>{ if(d.brands[b.id]) state.brands[b.id]={ status:d.brands[b.id].status||"ok", topics:(d.brands[b.id].topics||[]).map(t=>({id:t.id,name:t.name||"",detail:t.detail||"",open:!!t.open})) }; }); }
+    if(d.brands){ BRANDS.forEach(b=>{ if(d.brands[b.id]) state.brands[b.id]={ status:d.brands[b.id].status||"ok", topics:(d.brands[b.id].topics||[]).map(t=>({id:t.id,name:t.name||"",detail:t.detail||"",open:!!t.open,done:!!t.done})) }; }); }
     state.ai = d.ai || null;
     state.dirty = !!d.dirty;
     state.savedAt = d.savedAt || null;
@@ -298,6 +306,7 @@ function renderPanel(){
         </div>
       </div>
       <div class="suggest"><span>Cepat tambah:</span>${SUGGEST.map(n=>`<button class="chip" onclick="addTopic('${b.id}','${n}')">+ ${n}</button>`).join("")}</div>
+      ${s.topics.length?`<div class="topic-tools"><button onclick="expandAll(true)">⊕ Buka semua</button><button onclick="expandAll(false)">⊖ Tutup semua</button></div>`:``}
       <div id="topicList"></div>
       ${s.topics.length?``:`<div class="empty-hint">Belum ada topik. Klik salah satu di atas atau tombol di bawah.</div>`}
       <button class="add-topic" onclick="addTopic('${b.id}','')">+ Tambah topik kosong</button>
@@ -310,10 +319,11 @@ function renderTopics(){
   const list=document.getElementById("topicList");
   if(!list) return;
   list.innerHTML=s.topics.map(t=>`
-    <div class="topic ${t.open?'open':''}" data-t="${t.id}">
+    <div class="topic ${t.open?'open':''} ${t.done?'done':''}" data-t="${t.id}">
       <div class="topic-head" onclick="toggleTopic('${t.id}')">
         <span class="chev">▸</span>
         <span class="topic-name ${t.name.trim()?'':'empty'}" id="tn-${t.id}">${t.name.trim()?escapeHtml(t.name):'Topik baru'}</span>
+        <button class="topic-done ${t.done?'on':''}" title="Tandai selesai" onclick="event.stopPropagation();toggleDone('${t.id}')">✓ DONE</button>
         <span class="topic-del" title="Hapus" onclick="event.stopPropagation();deleteTopic('${t.id}')">✕</span>
       </div>
       <div class="topic-body">
@@ -333,7 +343,7 @@ function renderTopics(){
 function setStatus(bid,key){ state.brands[bid].status=key; state.dirty=!!state.ai; renderPanel(); saveState(); renderBrandTabs(); render(); updateComposeUI(); }
 function addTopic(bid,name){
   if(bid!==state.activeBrand){ state.activeBrand=bid; }
-  state.brands[bid].topics.push({ id:"t"+(topicSeq++), name:name||"", detail:"", open:true });
+  state.brands[bid].topics.push({ id:"t"+(topicSeq++), name:name||"", detail:"", open:true, done:false });
   state.dirty=!!state.ai; renderPanel(); renderBrandTabs(); saveState(); render(); updateComposeUI();
   const arr=state.brands[bid].topics; const last=arr[arr.length-1];
   const sel = name ? `.t-detail[data-t="${last.id}"]` : `.t-name[data-t="${last.id}"]`;
@@ -342,6 +352,14 @@ function addTopic(bid,name){
 function toggleTopic(tid){
   const t=state.brands[state.activeBrand].topics.find(x=>x.id===tid);
   if(t){ t.open=!t.open; renderTopics(); saveState(); }
+}
+function toggleDone(tid){
+  const t=state.brands[state.activeBrand].topics.find(x=>x.id===tid);
+  if(t){ t.done=!t.done; renderTopics(); state.dirty=!!state.ai; saveState(); render(); updateComposeUI(); }
+}
+function expandAll(open){
+  state.brands[state.activeBrand].topics.forEach(t=>t.open=open);
+  renderTopics(); saveState();
 }
 function deleteTopic(tid){
   const s=state.brands[state.activeBrand];
@@ -352,11 +370,11 @@ function deleteTopic(tid){
 /* ============== DRAFT ============== */
 function brandNote(bid){
   return state.brands[bid].topics.filter(t=>t.name.trim()||t.detail.trim())
-    .map(t=>`${t.name.trim()||'(topik)'}: ${t.detail.trim()}`).join("\n");
+    .map(t=>`${t.name.trim()||'(topik)'}: ${t.detail.trim()}${t.done?' [SELESAI]':''}`).join("\n");
 }
 function hasInput(){ return BRANDS.some(b=>topicCount(b.id)>0); }
 function draftText(lang){
-  const L = lang==="en" ? {title:"Updated Report (draft)",date:"Date"} : {title:"WEEKLY RECAP (draft)",date:"Tanggal"};
+  const L = lang==="en" ? {title:"WEEKLY RECAP (draft)",date:"Date"} : {title:"WEEKLY RECAP (draft)",date:"Tanggal"};
   const RULE="––––––––––––––––––––––"; const out=[];
   out.push(`§T${L.title}`); out.push(`§M${L.date}: ${nowDate()}`); out.push(`§R${RULE}`);
   let any=false;
@@ -365,7 +383,7 @@ function draftText(lang){
     const tops=s.topics.filter(t=>t.name.trim()||t.detail.trim());
     if(!tops.length) return; any=true;
     out.push(`§H${st.emoji} ${b.name} — ${lang==="en"?st.en:st.id}`);
-    tops.forEach(t=>{ out.push(`   • ${t.name.trim()||'(topik)'}${t.detail.trim()?': '+t.detail.trim():''}`); });
+    tops.forEach(t=>{ out.push(`   ${t.done?'✓':'•'} ${t.name.trim()||'(topik)'}${t.detail.trim()?': '+t.detail.trim():''}`); });
     out.push("§B");
   });
   if(!any) return null; return out;
